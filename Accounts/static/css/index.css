@@ -1,0 +1,10 @@
+button {
+    text-transform: none;
+    display: none !important;
+    color: red !important;
+    background-color: aqua !important;
+    width: 50% !important;
+    display: flex !important; 
+    display: grid !important;
+    text-align: center !important;
+}

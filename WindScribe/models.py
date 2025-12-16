@@ -7,17 +7,24 @@ from django.contrib.auth.models import User
 
 class Location(models.Model):
     location = models.CharField(max_length=300)
+    
+    def __str__(self):
+        return f"Місто: {self.location}"
 
 
 
 class Subcribe(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
     price = models.FloatField()
     locations = models.ManyToManyField(Location)
+    services = models.CharField(max_length=50, default="")
+    
+    def __str__(self):
+        return f"Підписка: {self.name}: ціна{self.price} -> сервіси: {self.services} "
     
 
 class Service(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     ipv_4_ext = models.GenericIPAddressField(unique=True, null=True, blank=True, default=None) 
     price_per_mounth_4_ext = models.FloatField(default=0)
     ipv_4_local = models.GenericIPAddressField(unique=True, null=True, blank=True, default=None)

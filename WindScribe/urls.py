@@ -3,5 +3,6 @@ from . import views
 
 
 urlpatterns = [
+    path("", views.get_subcribe, name="subcribe"),
     
 ]

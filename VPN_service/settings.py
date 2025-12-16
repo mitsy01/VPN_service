@@ -21,8 +21,8 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-MEDIA_PATH = BASE_DIR/"media"
-MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR/"media"
+MEDIA_URL = "/media/"
 LOGIN_URL = "/sign_in/"
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/' # Перенаправляти на головну сторінку
@@ -34,6 +34,17 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "offline"},
+    }
+}
+
+SESSION_COOKIE_AGE = 1209600
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -63,7 +74,8 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'captcha'
+    'captcha',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -91,7 +103,11 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
             ],
+            'builtins': [
+                'django.templatetags.static',
+            ],
         },
+        
     },
 ]
 
@@ -104,14 +120,14 @@ WSGI_APPLICATION = 'VPN_service.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.getenv("ENGINE"),
-        'NAME': os.getenv("NAME"),
-        'HOST': os.getenv("HOST"),
-        'PORT': os.getenv("PORT"),
-        'USER': os.getenv("USER_DB"),
-        'PASSWORD': os.getenv("PASSWORD"),
-        'OPTIONS': {
-            'sslmode': 'require'
-            }
+        'NAME': BASE_DIR/ "db.sqlite3",
+        # 'HOST': os.getenv("HOST"),
+        # 'PORT': os.getenv("PORT"),
+        # 'USER': os.getenv("USER_DB"),
+        # 'PASSWORD': os.getenv("PASSWORD"),
+        # 'OPTIONS': {
+        #     'sslmode': 'require'
+        #     }
     }
 }
 

@@ -1,5 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Вітаю {{ request.user.username}} в нашому додатку </h1>
-{% endblock content%}
+<link rel="stylesheet" href="{% static 'css/index.css' %}"> </style>
+<h1>Вітаю {{ request.user.username }} в нашому додатку </h1>
+
+<h2>Активна підписка: <em> {{ request.user.service.subcribe}}
+<h3>IPv4 local: <em>{{ request.user.service.ipv_4_local }}</em></h3>
+<h3>IPv4 External: <em>{{ request.user.service.ipv_4_ext }}</em></h3>
+<h3>IPv6: <em>{{ request.user.service.ipv_6 }}</em></h3>
+
+<h6>Locations: <em>
+    {% for location in request.user.service.subcribe.locations.all %}
+        {{ location }}, 
+    {% endfor %}
+</em></h6>
+
+<button id="myIdButton" class="myButton btn btn-success">Натисни</button>
+<div class="message"></div>
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock content %}

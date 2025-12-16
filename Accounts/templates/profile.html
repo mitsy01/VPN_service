@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<form method="post" action="{% url 'profile_post' %}">
+<form method="post" action="{% url 'profile_post'  %}" enctype="multipart/form-data">
+    {% if request.user.details.avatar %}
+    <p>
+        <img src="{{ MEDIA_URL }}{{ request.user.details.avatar}}" alt="Ava" height="400px">
+    </p>
+    {% endif %}
     {% csrf_token %}
     {{ user_form.as_p }}
     {{ profile_form.as_p}}
     <button class="btn btn-primary">Зберегти</button>
+</form>
+<script src="{% static 'js/profile.js' %}"></script>
 {% endblock content%}
